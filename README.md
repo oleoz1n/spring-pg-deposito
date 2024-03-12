@@ -5,7 +5,7 @@ CP I - **Java Advanced** aplicado em 12/03/2024.
 
 | ![](documentacao/fiap.jpg)               | **Java Advanced** |
 |------------------------------------------|-------------------|
-| **ALUNO:**                               | **TURMA:** 2TDSPJ |
+| **ALUNO:**                               | **TURMA:** 2TDSPG |
 | **PROFESSOR:** Benefrancis do Nascimento | 12/03/2024        |
 | **CP I**                      | ****              |
 
