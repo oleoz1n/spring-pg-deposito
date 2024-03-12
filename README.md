@@ -102,7 +102,7 @@ Alterar o arquivo contido em  **documentacao/equipe.txt** para incluir os RMs e 
 
 ## No pacote entity, criar as seguintes classes
 
-2. **(2 Pontos)** Criar a classe **ItemEstocado** e adicionar corretamente as anotações JPA.
+2. **(1,5 Pontos)** Criar a classe **ItemEstocado** e adicionar corretamente as anotações JPA.
 
 3. **(0,5 Ponto)** Criar a classe **Produto** e adicionar corretamente as anotações JPA.
 
@@ -116,25 +116,28 @@ Alterar o arquivo contido em  **documentacao/equipe.txt** para incluir os RMs e 
 6. **(6 Ponto)**  A perfeita criação dos Seguintes Resources no pacote resources:
 
    1. **DepositoResource** com as seguintes ROTAS e VERBOS:
-   1. "localhost/deposito" - **GET**, **POST**
-   2. "logalhost/deposito/{id}" - **GET**
+   1. (0,5 Ponto) "localhost/deposito" - **GET**;
+   2. (1 Ponto)   "localhost/deposito" - **POST**;
+   3. (0,5 Ponto) "logalhost/deposito/{id}" - **GET**
 
 
 2. **EnderecoResource** com as seguintes ROTAS e VERBOS:
-   1. "localhost/endereco" - **GET**, **POST**
-   2. "logalhost/endereco/{id}" - **GET**
+   1. (0,5 Ponto) "localhost/endereco" - **GET**, 
+   2. (1 Ponto)   "localhost/endereco" - **POST**,
+   3. (0,5 Ponto) "logalhost/endereco/{id}" - **GET**
 
 3. **ProdutoResource** com as seguintes ROTAS e VERBOS:
-   1. "localhost/produto" - **GET**, **POST**
-   2. "logalhost/produto/{id}" - **GET**
+   1. (0,5 Ponto) "localhost/produto" - **GET**,
+   2. (1 Ponto)   "localhost/produto" - **POST**
+   3. (0,5 Ponto) "logalhost/produto/{id}" - **GET**
 
 
-4. **EntradaResource** com as seguintes ROTAS e VERBOS:
+4. (1 Ponto **EXTRA DESAFIO**) **EntradaResource** com as seguintes ROTAS e VERBOS:
    1. "localhost/entrada/deposito/{idDeposito}/produto/{idProduto}" - **POST**
       No corpo da requisição deverá vir a quantidade de itens da entrada.
       O retorno deverá ser a Lista de Produtos estocados nesta entrada.
 
-5. **SaidaResource** com as seguintes ROTAS e VERBOS:
+5. (1 Ponto **EXTRA DESAFIO**) **SaidaResource** com as seguintes ROTAS e VERBOS:
    1. "localhost/saida/deposito/{idDeposito}/produto/{idProduto}" - **POST**
       No corpo da requisição deverá vir a quantidade de itens que sairão do deposito.
       O retorno deverá ser a Lista de Produtos que saem nesta requisição.
@@ -142,12 +145,12 @@ Alterar o arquivo contido em  **documentacao/equipe.txt** para incluir os RMs e 
 
 ## No pacote repository criar as seguintes interfaces
 
-7. **(2 Ponto)** A criação dos Seguintes Repositories :
+7. **(1 Ponto)** A criação dos Seguintes Repositories :
 
    1. **(0,25 Ponto)** DepositoRepository
    2. **(0,25 Ponto)** EnderecoRepository
    3. **(0,25 Ponto)** ProdutoRepository
-   4. **(1,25 Ponto)** ItemEstocadoRepository
+   4. **(0,25 Ponto)** ItemEstocadoRepository
 
 
 <a id="_Diagrama_de_Classes"></a>
