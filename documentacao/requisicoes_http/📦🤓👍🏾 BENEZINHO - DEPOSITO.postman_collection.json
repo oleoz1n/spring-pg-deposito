@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "225c4afc-d283-49b2-8e25-e7b4b6a456c0",
+		"name": "📦🤓👍🏾 BENEZINHO - DEPOSITO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1524675"
+	},
+	"item": [
+		{
+			"name": "DEPOSITO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/deposito",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"deposito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEPOSITO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\" : \"Penha\",\r\n    \"endereco\" : {\r\n        \"cep\" : \"123456\",\r\n        \"numero\" : \"100\",\r\n        \"complemento\" : \"galpao\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/deposito",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"deposito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "produto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/produto",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\" : \"Caneca da Fiap\",\r\n    \"valor\" : 9.99,\r\n    \"descricao\" : \"Caneca preta com o logo da FIAP\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/produto",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "produto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/produto/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Entrada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantidade\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/entrada/deposito/1/produto/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"entrada",
+						"deposito",
+						"1",
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SAIDA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantidade\" : 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/saida/deposito/1/produto/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"saida",
+						"deposito",
+						"1",
+						"produto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEPOSITO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/deposito/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"deposito",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "endereco",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/endereco/1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

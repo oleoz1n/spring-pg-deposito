@@ -90,7 +90,7 @@ Na sprint atual, você foi incumbido de fazer:
 
 **Fazer o fork do projeto do github.**:
 
-[https://github.com/Benefrancis/spring-pj-motos](https://github.com/Benefrancis/spring-pj-motos)
+[https://github.com/Benefrancis/spring-pg-deposito](https://github.com/Benefrancis/spring-pg-deposito)
 
 Caso o github esteja indisponível, você deverá pegar o projeto no diretório compartilhado.
 
