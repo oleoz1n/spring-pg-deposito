@@ -33,23 +33,13 @@ public class SaidaResource {
     @Transactional
     @PostMapping(value = "/{idDeposito}/produto/{idProduto}")
     public List<ItemEstocado> saida(@PathVariable Long idDeposito, @PathVariable Long idProduto, @RequestBody SaidaDTO saida) {
-
         Deposito deposito = depositoRepository.findById( idDeposito ).orElseThrow();
-
         Produto produto = produtoRepository.findById( idProduto ).orElseThrow();
-
         if (Objects.isNull( saida ) || saida.quantidade() < 1) return null;
-
-
         Integer i = 0;
-
         List<ItemEstocado> estocados = itemEstocadoRepository.findByProdutoAndDepositoAndSaidaIsNull( produto, deposito);
-
         List<ItemEstocado> saiu = new ArrayList<>();
-
-
         if (estocados.size() < saida.quantidade()) return null;
-
         while (saida.quantidade() > i) {
             estocados.get( i ).setSaida( LocalDateTime.now() );
             saiu.add( estocados.get( i ) );

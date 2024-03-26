@@ -34,35 +34,22 @@ public class EntradaResource {
     @Transactional
     @PostMapping(value = "/{idDeposito}/produto/{idProduto}")
     public List<ItemEstocado> entrada(@PathVariable Long idDeposito, @PathVariable Long idProduto, @RequestBody EntradaDTO entrada) {
-
         Deposito deposito = depositoRepository.findById( idDeposito ).orElseThrow();
-
         Produto produto = produtoRepository.findById( idProduto ).orElseThrow();
-
         if (Objects.isNull( entrada ) || entrada.quantidade() < 1) return null;
-
-
         Long i = 0L;
         List<ItemEstocado> estocados = new Vector<>();
-
         while (entrada.quantidade() > i) {
-
             ItemEstocado itemEstocado = ItemEstocado.builder()
                     .entrada( LocalDateTime.now() )
                     .numeroDeSerie( UUID.randomUUID().toString() )
                     .deposito( deposito )
                     .produto( produto )
                     .build();
-
-
             estocados.add( itemEstocadoRepository.save( itemEstocado ) );
-
             i++;
         }
-
-
         return estocados;
-
     }
 
 }
