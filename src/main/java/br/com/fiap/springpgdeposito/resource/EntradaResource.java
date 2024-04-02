@@ -1,13 +1,17 @@
 package br.com.fiap.springpgdeposito.resource;
 
 
+import br.com.fiap.springpgdeposito.dto.AbstractDTO;
 import br.com.fiap.springpgdeposito.dto.EntradaDTO;
+import br.com.fiap.springpgdeposito.dto.request.ItemEstocadoRequest;
+import br.com.fiap.springpgdeposito.dto.response.ItemEstocadoResponse;
 import br.com.fiap.springpgdeposito.entity.Deposito;
 import br.com.fiap.springpgdeposito.entity.ItemEstocado;
 import br.com.fiap.springpgdeposito.entity.Produto;
 import br.com.fiap.springpgdeposito.repository.DepositoRepository;
 import br.com.fiap.springpgdeposito.repository.ItemEstocadoRepository;
 import br.com.fiap.springpgdeposito.repository.ProdutoRepository;
+import br.com.fiap.springpgdeposito.service.ItemEstocadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,33 +27,36 @@ import java.util.Vector;
 public class EntradaResource {
 
     @Autowired
-    private DepositoRepository depositoRepository;
+    private ItemEstocadoService service;
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
-
-    @Autowired
-    private ItemEstocadoRepository itemEstocadoRepository;
 
     @Transactional
     @PostMapping(value = "/{idDeposito}/produto/{idProduto}")
-    public List<ItemEstocado> entrada(@PathVariable Long idDeposito, @PathVariable Long idProduto, @RequestBody EntradaDTO entrada) {
-        Deposito deposito = depositoRepository.findById( idDeposito ).orElseThrow();
-        Produto produto = produtoRepository.findById( idProduto ).orElseThrow();
-        if (Objects.isNull( entrada ) || entrada.quantidade() < 1) return null;
+    public List<ItemEstocadoResponse> entrada(
+            @PathVariable Long idDeposito,
+            @PathVariable Long idProduto,
+            @RequestBody EntradaDTO entrada
+    ) {
+        if (Objects.isNull(entrada) || entrada.quantidade() < 1) return null;
         Long i = 0L;
         List<ItemEstocado> estocados = new Vector<>();
+
         while (entrada.quantidade() > i) {
-            ItemEstocado itemEstocado = ItemEstocado.builder()
-                    .entrada( LocalDateTime.now() )
-                    .numeroDeSerie( UUID.randomUUID().toString() )
-                    .deposito( deposito )
-                    .produto( produto )
-                    .build();
-            estocados.add( itemEstocadoRepository.save( itemEstocado ) );
+            var produto = new AbstractDTO(idProduto);
+            var deposito = new AbstractDTO(idDeposito);
+            ItemEstocadoRequest itemEstocado = new ItemEstocadoRequest(
+                    produto,
+                    deposito
+            );
+
+            ItemEstocado saved = service.save(itemEstocado);
+            saved.setEntrada(LocalDateTime.now());
+            saved.setNumeroDeSerie( UUID.randomUUID().toString());
+            estocados.add(saved);
             i++;
         }
-        return estocados;
+
+        return estocados.stream().map(service::toResponse).toList();
     }
 
 }

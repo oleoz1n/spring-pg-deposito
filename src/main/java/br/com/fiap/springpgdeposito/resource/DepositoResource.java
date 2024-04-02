@@ -1,6 +1,8 @@
 package br.com.fiap.springpgdeposito.resource;
 
 
+import br.com.fiap.springpgdeposito.dto.request.DepositoRequest;
+import br.com.fiap.springpgdeposito.dto.response.DepositoResponse;
 import br.com.fiap.springpgdeposito.entity.Deposito;
 import br.com.fiap.springpgdeposito.repository.DepositoRepository;
 import br.com.fiap.springpgdeposito.service.DepositoService;
@@ -18,19 +20,23 @@ public class DepositoResource {
     private DepositoService service;
 
     @GetMapping
-    public List<Deposito> findAll() {
-        return service.findAll();
+    public List<DepositoResponse> findAll() {
+        return service.findAll()
+                .stream()
+                .map(service::toResponse)
+                .toList();
     }
 
     @GetMapping(value = "/{id}")
-    public Deposito findById(@PathVariable Long id){
-       return service.findById( id );
+    public DepositoResponse findById(@PathVariable Long id) {
+        return service.toResponse(service.findById(id));
     }
 
     @Transactional
     @PostMapping
-    public Deposito save(@RequestBody Deposito d){
-       return service.save( d );
+    public DepositoResponse save(@RequestBody DepositoRequest d) {
+        Deposito saved = service.save(d);
+        return service.toResponse(saved);
     }
 
 }

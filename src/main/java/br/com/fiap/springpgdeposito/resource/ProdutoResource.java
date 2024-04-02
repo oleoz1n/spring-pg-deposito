@@ -1,8 +1,10 @@
 package br.com.fiap.springpgdeposito.resource;
 
 
+import br.com.fiap.springpgdeposito.dto.request.ProdutoRequest;
+import br.com.fiap.springpgdeposito.dto.response.ProdutoResponse;
 import br.com.fiap.springpgdeposito.entity.Produto;
-import br.com.fiap.springpgdeposito.repository.ProdutoRepository;
+import br.com.fiap.springpgdeposito.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -14,22 +16,28 @@ import java.util.List;
 public class ProdutoResource {
 
     @Autowired
-    private ProdutoRepository repo;
+    private ProdutoService service;
 
     @GetMapping
-    public List<Produto> findAll() {
-        return repo.findAll();
+    public List<ProdutoResponse> findAll() {
+        return service.findAll()
+                .stream()
+                .map(service::toResponse)
+                .toList();
     }
 
     @GetMapping(value = "/{id}")
-    public Produto findById(@PathVariable Long id){
-       return repo.findById( id ).orElseThrow();
+    public ProdutoResponse findById(@PathVariable Long id) {
+        return service.toResponse(
+                service.findById(id)
+        );
     }
 
     @Transactional
     @PostMapping
-    public Produto save(@RequestBody Produto p){
-       return repo.save( p );
+    public ProdutoResponse save(@RequestBody ProdutoRequest p) {
+        Produto saved = service.save(p);
+        return service.toResponse(saved);
     }
 
 }
