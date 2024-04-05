@@ -6,11 +6,14 @@ import br.com.fiap.springpgdeposito.dto.response.ProdutoResponse;
 import br.com.fiap.springpgdeposito.entity.Produto;
 import br.com.fiap.springpgdeposito.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -22,10 +25,25 @@ public class ProdutoResource {
     private ProdutoService service;
 
     @GetMapping
-    public ResponseEntity<List<ProdutoResponse>> findAll() {
+    public ResponseEntity<List<ProdutoResponse>> findAll(
+            @RequestParam(name = "nome", required = false) String nome,
+            @RequestParam(name = "descricao", required = false) String descricao,
+            @RequestParam(name = "valor", required = false) BigDecimal valor
+    ) {
+        Produto produto = Produto.builder()
+                .nome( nome )
+                .descricao( descricao )
+                .valor( valor )
+                .build();
 
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAll()
+                .withIgnoreCase()
+                .withIgnoreNullValues();
 
-        List<ProdutoResponse> list = service.findAll()
+        Example<Produto> example = Example.of(produto, matcher);
+
+        List<ProdutoResponse> list = service.findAll(example)
                 .stream()
                 .map( service::toResponse )
                 .toList();

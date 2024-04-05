@@ -298,6 +298,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "localhost/produto?nome=Caneca da Fiap",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/produto?nome=Caneca da Fiap&descricao=Caneca preta com o logo da FIAP&valor=9.99",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"produto"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Caneca da Fiap"
+								},
+								{
+									"key": "descricao",
+									"value": "Caneca preta com o logo da FIAP"
+								},
+								{
+									"key": "valor",
+									"value": "9.99"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

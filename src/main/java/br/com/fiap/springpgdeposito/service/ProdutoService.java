@@ -6,8 +6,10 @@ import br.com.fiap.springpgdeposito.dto.response.ProdutoResponse;
 import br.com.fiap.springpgdeposito.entity.Produto;
 import br.com.fiap.springpgdeposito.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,5 +61,9 @@ public class ProdutoService implements ServiceDTO<Produto, ProdutoRequest, Produ
     @Override
     public Produto findById(Long id) {
         return repo.findById(id).orElse(null);
+    }
+
+    public Collection<Produto> findAll(Example<Produto> example) {
+        return repo.findAll(example);
     }
 }
