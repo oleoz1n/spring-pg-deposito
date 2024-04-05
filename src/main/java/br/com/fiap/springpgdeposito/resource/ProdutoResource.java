@@ -48,7 +48,9 @@ public class ProdutoResource {
     @Transactional
     @PostMapping
     public ResponseEntity<ProdutoResponse> save(@RequestBody ProdutoRequest p) {
+
         if (p == null) ResponseEntity.badRequest().build();
+
         Produto saved = service.save( p );
         ProdutoResponse response = service.toResponse( saved );
 

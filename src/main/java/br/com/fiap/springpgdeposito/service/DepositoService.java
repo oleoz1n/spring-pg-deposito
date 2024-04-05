@@ -29,7 +29,7 @@ public class DepositoService implements ServiceDTO<Deposito, DepositoRequest, De
      */
     @Override
     public Deposito toEntity(DepositoRequest depositoRequest) {
-
+        if (Objects.isNull(depositoRequest)) return null;
         return Deposito.builder()
                 .nome(depositoRequest.nome())
                 .endereco(enderecoService.toEntity(depositoRequest.endereco()))
@@ -43,6 +43,8 @@ public class DepositoService implements ServiceDTO<Deposito, DepositoRequest, De
      */
     @Override
     public DepositoResponse toResponse(Deposito deposito) {
+
+        if (Objects.isNull(deposito)) return null;
 
         return new DepositoResponse(
                 deposito.getId(),

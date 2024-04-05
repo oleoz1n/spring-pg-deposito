@@ -39,6 +39,8 @@ public class EnderecoResource {
     @PostMapping
     public ResponseEntity<EnderecoResponse> save(@RequestBody EnderecoRequest e) {
 
+        if (Objects.isNull(e)) return ResponseEntity.badRequest().build();
+
         EnderecoResponse response = service.toResponse( service.save( e ) );
         if (Objects.isNull( response )) return ResponseEntity.badRequest().build();
 

@@ -7,266 +7,431 @@
 	},
 	"item": [
 		{
-			"name": "DEPOSITO",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/deposito",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"deposito"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DEPOSITO",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\" : \"Penha\",\r\n    \"endereco\" : {\r\n        \"cep\" : \"123456\",\r\n        \"numero\" : \"100\",\r\n        \"complemento\" : \"galpao\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "001 - DEPOSITO",
+			"item": [
+				{
+					"name": "DEPOSITO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has an id property\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('id');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a nome property\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.property('nome');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has an endereco object with properties id, cep, numero, and complemento\", function () {\r",
+									"    var endereco = pm.response.json().endereco;\r",
+									"    pm.expect(endereco).to.be.an('object').that.has.all.keys('id', 'cep', 'numero', 'complemento');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"ID is a non-negative integer\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.id).to.be.a('number').and.to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields - id, nome, and endereco\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData).to.include.all.keys('id', 'nome', 'endereco');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"Osasco\",\r\n    \"endereco\" : {\r\n        \"cep\" : \"06080-200\",\r\n        \"numero\" : \"100\",\r\n        \"complemento\" : \"galpao de OZ\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/deposito",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"deposito"
+							]
+						},
+						"description": "\nThis endpoint allows you to make an HTTP POST request to localhost/deposito in order to add a new deposito entry. The request should contain a JSON payload with the fields \"nome\" and \"endereco\", where \"endereco\" is an object with the fields \"cep\", \"numero\", and \"complemento\".\n\n### Request Body\n- `nome` (string, required): The name of the deposito entry.\n- `endereco` (object, required): The address object containing the following fields:\n  - `cep` (string, required): The postal code of the address.\n  - `numero` (string, required): The house number of the address.\n  - `complemento` (string, required): Additional address details.\n\n### Response\nUpon a successful execution (Status: 200), the response will be in JSON format with the following structure:\n```json\n{\n  \"id\": 0,\n  \"nome\": \"\",\n  \"endereco\": {\n    \"id\": 0,\n    \"cep\": \"\",\n    \"numero\": \"\",\n    \"complemento\": \"\"\n  }\n}\n```\nThe response will contain the newly added deposito entry's \"id\", \"nome\", and \"endereco\" details.\n\n"
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost/deposito",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"deposito"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "produto",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/produto",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"produto"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "produto",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\" : \"Caneca da Fiap\",\r\n    \"valor\" : 9.99,\r\n    \"descricao\" : \"Caneca preta com o logo da FIAP\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "DEPOSITO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is an array of objects\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array').that.is.not.empty;",
+									"    pm.response.json().forEach(function(deposito) {",
+									"        pm.expect(deposito).to.be.an('object').that.has.property('id');",
+									"        pm.expect(deposito).to.be.an('object').that.has.property('nome');",
+									"        pm.expect(deposito).to.be.an('object').that.has.property('endereco');",
+									"        pm.expect(deposito.endereco).to.be.an('object').that.has.property('id');",
+									"        pm.expect(deposito.endereco).to.be.an('object').that.has.property('cep');",
+									"        pm.expect(deposito.endereco).to.be.an('object').that.has.property('numero');",
+									"        pm.expect(deposito.endereco).to.be.an('object').that.has.property('complemento');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost/produto",
-					"host": [
-						"localhost"
 					],
-					"path": [
-						"produto"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "produto",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/produto/1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"produto",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Entrada",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"quantidade\": 100\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/deposito",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"deposito"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost/entrada/deposito/1/produto/1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"entrada",
-						"deposito",
-						"1",
-						"produto",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "SAIDA",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"quantidade\" : 10\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "DEPOSITO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/deposito/100000",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"deposito",
+								"100000"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost/saida/deposito/1/produto/1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"saida",
-						"deposito",
-						"1",
-						"produto",
-						"1"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "DEPOSITO",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/deposito/1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"deposito",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "endereco",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/endereco/1",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"endereco",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost/endereco/9",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost/endereco/9",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"endereco",
-						"9"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost/endereco",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"cep\" : \"06086-120\",\r\n    \"numero\" : \"505\",\r\n    \"complemento\" : \"AP 81-A\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "002 - PRODUTO",
+			"item": [
+				{
+					"name": "produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has id, nome, descricao, and valor properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('id');\r",
+									"    pm.expect(jsonData).to.have.property('nome');\r",
+									"    pm.expect(jsonData).to.have.property('descricao');\r",
+									"    pm.expect(jsonData).to.have.property('valor');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "localhost/endereco",
-					"host": [
-						"localhost"
 					],
-					"path": [
-						"endereco"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Livro da Fiap\",\r\n    \"valor\": 899.99,\r\n    \"descricao\": \"Livro de História da FIAP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/produto",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"produto"
+							]
+						},
+						"description": "\n    \n### Add a New Product\n\nThis endpoint allows you to add a new product to the system.\n\n#### Request Body\n- `nome` (string, required): The name of the product.\n- `valor` (number, required): The value of the product.\n- `descricao` (string, required): The description of the product.\n\nExample:\n```json\n{\n    \"nome\": \"Product Name\",\n    \"valor\": 100,\n    \"descricao\": \"Product Description\"\n}\n```\n\n#### Response\n- `id` (number): The unique identifier of the newly added product.\n- `nome` (string): The name of the product.\n- `valor` (number): The value of the product.\n- `descricao` (string): The description of the product.\n\nExample:\n```json\n{\n    \"id\": 123,\n    \"nome\": \"Product Name\",\n    \"valor\": 100,\n    \"descricao\": \"Product Description\"\n}\n```\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type header with value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each element in the array has id as a number, nome as a string, descricao as a string, and valor as a number\", function () {\r",
+									"    pm.response.json().forEach(function(produto) {\r",
+									"        pm.expect(produto.id).to.be.a('number');\r",
+									"        pm.expect(produto.nome).to.be.a('string');\r",
+									"        pm.expect(produto.descricao).to.be.a('string');\r",
+									"        pm.expect(produto.valor).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each element in the array has a non-empty nome and descricao\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(element) {\r",
+									"        pm.expect(element.nome).to.exist.and.to.not.be.empty;\r",
+									"        pm.expect(element.descricao).to.exist.and.to.not.be.empty;\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Valor (value) is a non-negative number for each element in the array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"\r",
+									"    responseData.forEach(function(item) {\r",
+									"        pm.expect(item.valor).to.be.a('number').and.to.be.at.least(0);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/produto",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "produto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/produto/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"produto",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "localhost/endereco",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost/endereco",
-					"host": [
-						"localhost"
+			"name": "003 - ENTRADA",
+			"item": [
+				{
+					"name": "Entrada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type header with value application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each element in the response array has id, numeroDeSerie, produto, deposito, entrada, and saida properties\", function () {\r",
+									"    pm.response.json().forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"numeroDeSerie\");\r",
+									"        pm.expect(item).to.have.property(\"produto\");\r",
+									"        pm.expect(item).to.have.property(\"deposito\");\r",
+									"        pm.expect(item).to.have.property(\"entrada\");\r",
+									"        pm.expect(item).to.have.property(\"saida\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
 					],
-					"path": [
-						"endereco"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantidade\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/entrada/deposito/2/produto/2",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entrada",
+								"deposito",
+								"2",
+								"produto",
+								"2"
+							]
+						},
+						"description": "\n### Add Product to Warehouse Inventory\n\nThis endpoint allows you to add a product to a specific warehouse inventory.\n\n**Request Body**\n- quantidade (number, required): The quantity of the product to be added to the warehouse inventory.\n\n#### Response\n- Status: 200 OK\n- Content-Type: application/json\n\nExample response body:\n```json\n[\n    {\n        \"id\": 0,\n        \"numeroDeSerie\": \"\",\n        \"produto\": {\n            \"id\": 0,\n            \"nome\": \"\",\n            \"descricao\": \"\",\n            \"valor\": 0\n        },\n        \"deposito\": {\n            \"id\": 0,\n            \"nome\": \"\",\n            \"endereco\": {\n                \"id\": 0,\n                \"cep\": \"\",\n                \"numero\": \"\",\n                \"complemento\": \"\"\n            }\n        },\n        \"entrada\": \"\",\n        \"saida\": null\n    }\n]\n```\n"
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "004 - SAIDA",
+			"item": [
+				{
+					"name": "SAIDA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type header set to application/json\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each element in the response is an object with specific properties\", function () {\r",
+									"    pm.response.json().forEach(function(item) {\r",
+									"        pm.expect(item).to.be.an('object').that.has.all.keys('id', 'numeroDeSerie', 'produto', 'deposito', 'entrada', 'saida');\r",
+									"        pm.expect(item.produto).to.be.an('object').that.has.all.keys('id', 'nome', 'descricao', 'valor');\r",
+									"        pm.expect(item.deposito).to.be.an('object').that.has.all.keys('id', 'nome', 'endereco');\r",
+									"        pm.expect(item.deposito.endereco).to.be.an('object').that.has.all.keys('id', 'cep', 'numero', 'complemento');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantidade\" : 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/saida/deposito/1/produto/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"saida",
+								"deposito",
+								"1",
+								"produto",
+								"1"
+							]
+						},
+						"description": "\nThis endpoint allows you to make an HTTP POST request to localhost/saida/deposito/2/produto/2 in order to deposit a product in a specific location. The request should include a payload with the raw request body type, containing the \"quantidade\" parameter.\n\n### Request Body\n- quantidade (number, required): The quantity of the product to be deposited.\n\n### Response\nUpon a successful execution, the endpoint returns a status of 200 and a JSON array containing the details of the deposited product, including its ID, serial number, name, description, value, deposit location details, and entry and exit timestamps.\n\nExample response:\n```json\n[\n    {\n        \"id\": 0,\n        \"numeroDeSerie\": \"\",\n        \"produto\": {\n            \"id\": 0,\n            \"nome\": \"\",\n            \"descricao\": \"\",\n            \"valor\": 0\n        },\n        \"deposito\": {\n            \"id\": 0,\n            \"nome\": \"\",\n            \"endereco\": {\n                \"id\": 0,\n                \"cep\": \"\",\n                \"numero\": \"\",\n                \"complemento\": \"\"\n            }\n        },\n        \"entrada\": \"\",\n        \"saida\": \"\"\n    }\n]\n```\n"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

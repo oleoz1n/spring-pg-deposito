@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/deposito")
@@ -39,10 +42,20 @@ public class DepositoResource {
     @Transactional
     @PostMapping
     public ResponseEntity<DepositoResponse> save(@RequestBody DepositoRequest d) {
+
+        if (Objects.isNull(d)) return ResponseEntity.badRequest().build();
+
         Deposito saved = service.save( d );
         DepositoResponse response = service.toResponse( saved );
         if (response == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok( response );
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path( "/{id}" )
+                .buildAndExpand( response.id() )
+                .toUri();
+
+        return ResponseEntity.created( uri ).body( response );
     }
 
 }
