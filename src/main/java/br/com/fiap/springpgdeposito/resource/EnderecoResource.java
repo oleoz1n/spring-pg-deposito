@@ -22,31 +22,33 @@ public class EnderecoResource {
     private EnderecoService service;
 
     @GetMapping
-    public List<EnderecoResponse> findAll() {
-        return service.findAll().stream().map(service::toResponse).toList();
+    public ResponseEntity<List<EnderecoResponse>> findAll() {
+        List<EnderecoResponse> list = service.findAll().stream().map( service::toResponse ).toList();
+        if(list.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<EnderecoResponse> findById(@PathVariable Long id) {
-        EnderecoResponse response = service.toResponse(service.findById(id));
-        if(Objects.isNull(response)) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(response);
+        EnderecoResponse response = service.toResponse( service.findById( id ) );
+        if (Objects.isNull( response )) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok( response );
     }
 
     @Transactional
     @PostMapping
     public ResponseEntity<EnderecoResponse> save(@RequestBody EnderecoRequest e) {
 
-        EnderecoResponse response = service.toResponse(service.save(e));
-        if(Objects.isNull(response)) return ResponseEntity.badRequest().build();
+        EnderecoResponse response = service.toResponse( service.save( e ) );
+        if (Objects.isNull( response )) return ResponseEntity.badRequest().build();
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.id())
+                .path( "/{id}" )
+                .buildAndExpand( response.id() )
                 .toUri();
 
-        return ResponseEntity.created( uri ).body(response);
+        return ResponseEntity.created( uri ).body( response );
 
     }
 

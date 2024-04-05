@@ -4,9 +4,9 @@ package br.com.fiap.springpgdeposito.resource;
 import br.com.fiap.springpgdeposito.dto.request.DepositoRequest;
 import br.com.fiap.springpgdeposito.dto.response.DepositoResponse;
 import br.com.fiap.springpgdeposito.entity.Deposito;
-import br.com.fiap.springpgdeposito.repository.DepositoRepository;
 import br.com.fiap.springpgdeposito.service.DepositoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,23 +20,29 @@ public class DepositoResource {
     private DepositoService service;
 
     @GetMapping
-    public List<DepositoResponse> findAll() {
-        return service.findAll()
+    public ResponseEntity<List<DepositoResponse>> findAll() {
+        List<DepositoResponse> list = service.findAll()
                 .stream()
-                .map(service::toResponse)
+                .map( service::toResponse )
                 .toList();
+        if (list.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok( list );
     }
 
     @GetMapping(value = "/{id}")
-    public DepositoResponse findById(@PathVariable Long id) {
-        return service.toResponse(service.findById(id));
+    public ResponseEntity<DepositoResponse> findById(@PathVariable Long id) {
+        DepositoResponse response = service.toResponse( service.findById( id ) );
+        if (response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok( response );
     }
 
     @Transactional
     @PostMapping
-    public DepositoResponse save(@RequestBody DepositoRequest d) {
-        Deposito saved = service.save(d);
-        return service.toResponse(saved);
+    public ResponseEntity<DepositoResponse> save(@RequestBody DepositoRequest d) {
+        Deposito saved = service.save( d );
+        DepositoResponse response = service.toResponse( saved );
+        if (response == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok( response );
     }
 
 }

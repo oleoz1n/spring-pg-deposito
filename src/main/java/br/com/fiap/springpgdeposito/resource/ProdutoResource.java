@@ -6,9 +6,12 @@ import br.com.fiap.springpgdeposito.dto.response.ProdutoResponse;
 import br.com.fiap.springpgdeposito.entity.Produto;
 import br.com.fiap.springpgdeposito.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,25 +22,47 @@ public class ProdutoResource {
     private ProdutoService service;
 
     @GetMapping
-    public List<ProdutoResponse> findAll() {
-        return service.findAll()
+    public ResponseEntity<List<ProdutoResponse>> findAll() {
+
+
+        List<ProdutoResponse> list = service.findAll()
                 .stream()
-                .map(service::toResponse)
+                .map( service::toResponse )
                 .toList();
+
+        if (list.isEmpty()) ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok( list );
+
     }
 
     @GetMapping(value = "/{id}")
-    public ProdutoResponse findById(@PathVariable Long id) {
-        return service.toResponse(
-                service.findById(id)
+    public ResponseEntity<ProdutoResponse> findById(@PathVariable Long id) {
+        ProdutoResponse response = service.toResponse(
+                service.findById( id )
         );
+        if (response == null) ResponseEntity.noContent().build();
+        return ResponseEntity.ok( response );
     }
 
     @Transactional
     @PostMapping
-    public ProdutoResponse save(@RequestBody ProdutoRequest p) {
-        Produto saved = service.save(p);
-        return service.toResponse(saved);
+    public ResponseEntity<ProdutoResponse> save(@RequestBody ProdutoRequest p) {
+        if (p == null) ResponseEntity.badRequest().build();
+        Produto saved = service.save( p );
+        ProdutoResponse response = service.toResponse( saved );
+
+        if (response == null) ResponseEntity.noContent().build();
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path( "/{id}" )
+                .buildAndExpand( response.id() )
+                .toUri();
+
+
+        return ResponseEntity.created( uri ).body( response );
+
     }
 
 }
