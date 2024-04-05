@@ -205,6 +205,68 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost/endereco/9",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/endereco/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"endereco",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/endereco",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cep\" : \"06086-120\",\r\n    \"numero\" : \"505\",\r\n    \"complemento\" : \"AP 81-A\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/endereco",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/endereco",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/endereco",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"endereco"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
