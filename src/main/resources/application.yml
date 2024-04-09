@@ -2,8 +2,7 @@ spring:
   application:
     name: deposito
   profiles:
-    active: desenvolvimento
-  thymeleaf:
+    active: homologacao
     check-template-location: false
 
 

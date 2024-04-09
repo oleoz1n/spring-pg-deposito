@@ -5,6 +5,7 @@ import br.com.fiap.springpgdeposito.dto.request.ProdutoRequest;
 import br.com.fiap.springpgdeposito.dto.response.ProdutoResponse;
 import br.com.fiap.springpgdeposito.entity.Produto;
 import br.com.fiap.springpgdeposito.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -65,7 +66,7 @@ public class ProdutoResource {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<ProdutoResponse> save(@RequestBody ProdutoRequest p) {
+    public ResponseEntity<ProdutoResponse> save(@RequestBody @Valid ProdutoRequest p) {
 
         if (p == null) ResponseEntity.badRequest().build();
 

@@ -5,6 +5,7 @@ import br.com.fiap.springpgdeposito.dto.request.DepositoRequest;
 import br.com.fiap.springpgdeposito.dto.response.DepositoResponse;
 import br.com.fiap.springpgdeposito.entity.Deposito;
 import br.com.fiap.springpgdeposito.service.DepositoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class DepositoResource {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<DepositoResponse> save(@RequestBody DepositoRequest d) {
+    public ResponseEntity<DepositoResponse> save(@RequestBody @Valid DepositoRequest d) {
 
         if (Objects.isNull(d)) return ResponseEntity.badRequest().build();
 

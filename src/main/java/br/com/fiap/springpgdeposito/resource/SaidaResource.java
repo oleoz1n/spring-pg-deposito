@@ -9,6 +9,7 @@ import br.com.fiap.springpgdeposito.repository.ItemEstocadoRepository;
 import br.com.fiap.springpgdeposito.service.DepositoService;
 import br.com.fiap.springpgdeposito.service.ItemEstocadoService;
 import br.com.fiap.springpgdeposito.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,11 @@ public class SaidaResource {
 
     @Transactional
     @PostMapping(value = "/{idDeposito}/produto/{idProduto}")
-    public ResponseEntity<List<ItemEstocadoResponse>> saida(@PathVariable Long idDeposito, @PathVariable Long idProduto, @RequestBody SaidaDTO saida) {
+    public ResponseEntity<List<ItemEstocadoResponse>> saida(
+            @PathVariable Long idDeposito,
+            @PathVariable Long idProduto,
+            @RequestBody @Valid SaidaDTO saida
+    ) {
 
         if (Objects.isNull( saida ) || saida.quantidade() < 1) return ResponseEntity.badRequest().build();
 

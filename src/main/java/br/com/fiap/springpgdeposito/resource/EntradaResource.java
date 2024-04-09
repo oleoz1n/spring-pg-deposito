@@ -7,6 +7,7 @@ import br.com.fiap.springpgdeposito.dto.request.ItemEstocadoRequest;
 import br.com.fiap.springpgdeposito.dto.response.ItemEstocadoResponse;
 import br.com.fiap.springpgdeposito.entity.ItemEstocado;
 import br.com.fiap.springpgdeposito.service.ItemEstocadoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class EntradaResource {
     public ResponseEntity<List<ItemEstocadoResponse>> entrada(
             @PathVariable Long idDeposito,
             @PathVariable Long idProduto,
-            @RequestBody EntradaDTO entrada
+            @RequestBody @Valid EntradaDTO entrada
     ) {
 
         if (Objects.isNull( entrada ) || entrada.quantidade() < 1) return ResponseEntity.badRequest().build();

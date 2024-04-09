@@ -4,6 +4,7 @@ package br.com.fiap.springpgdeposito.resource;
 import br.com.fiap.springpgdeposito.dto.request.EnderecoRequest;
 import br.com.fiap.springpgdeposito.dto.response.EnderecoResponse;
 import br.com.fiap.springpgdeposito.service.EnderecoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class EnderecoResource {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<EnderecoResponse> save(@RequestBody EnderecoRequest e) {
+    public ResponseEntity<EnderecoResponse> save(@RequestBody @Valid EnderecoRequest e) {
 
         if (Objects.isNull(e)) return ResponseEntity.badRequest().build();
 
